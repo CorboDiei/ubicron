@@ -4,16 +4,16 @@ UbiCron is an extended implementation of cron that interfaces with a ubicron web
 
 ## Installation
 
-'''bash
+```bash
 something lol
-'''
+```
 
 ## Usage
 
-'''bash
+```bash
 something lol
 
-'''
+```
 
 ## Contributing
 

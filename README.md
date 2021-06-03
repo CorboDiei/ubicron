@@ -21,4 +21,4 @@ Pull requests are welcome, although the project is still in preliminary phases, 
 
 ## License
 
-Some license
+Some license, test

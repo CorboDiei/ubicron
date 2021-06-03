@@ -13,3 +13,6 @@ Parsetab.o: Parsetab.cc Parsetab.h Jobs.h
 Jobs.o: Jobs.cc Jobs.h 
 	${CC} ${CFLAGS} -c $<
 
+clean:
+	rm -f *.o *~ main
+

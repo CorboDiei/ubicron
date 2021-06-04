@@ -11,6 +11,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
 
@@ -18,10 +19,11 @@ using namespace std;
 using namespace boost::uuids;
 namespace pt = boost::property_tree;
 
-enum FormatType { input, output, sub_triggers };
+enum FormatType { unset, input, output, sub_triggers };
 
 class FormatTree {
     public:
+        FormatTree(void) : type_(FormatType::unset) { }
         explicit FormatTree(string json_text);
 
         bool verify_tree(FormatType type);
@@ -35,15 +37,21 @@ class FormatTree {
 
 class Job {
     public:
-        Job(void) { }
-        explicit Job(uuid id) : job_id_(id) { }
+        Job(void) : verified_(false) { }
+        explicit Job(uuid id) : job_id_(id), verified_(false) { }
         explicit Job(uuid id, vector<string> commands,
             FormatTree input, FormatTree output, FormatTree sub_trigs);
 
         uuid get_id(void) {return job_id_;}
+        bool set_id(uuid id) {job_id_ = id;}
+
+        FormatTree get_input(void) {return input_;}
+
     private:
         uuid job_id_;
-        vector<string> commands;
+        vector<string> commands_;
+        FormatTree input_, output_, sub_triggers_;
+        bool verified_;
 
 
 

@@ -17,21 +17,21 @@ using namespace std;
 using namespace boost::uuids;
 using namespace boost::algorithm;
 
-Jobs* parseTab(string& path) {
+bool parseTab(string& path, Jobs* j) {
 
     string file_ext(".ubicrontab");
     if (!ends_with(path, file_ext)) {
         cerr << "File could not be parsed, not an ubicron table file." << endl;
-        return nullptr;
+        return false;
     }
     ifstream f(&path[0]);
     if (!f.good()) {
         cerr << "The table file couldn't be opened" << endl;
-        return nullptr;
+        return false;
     }
     string full_file((istreambuf_iterator<char>(f)),
                     istreambuf_iterator<char>());
     
     cout << full_file << endl;
-    return nullptr;
+    return true;
 }

@@ -14,7 +14,7 @@ using namespace std;
 // Parses the table at the passed address, 
 // returns a new jobs object that 
 
-Jobs* parseTab(string& path);
+bool parseTab(string& path, Jobs* j);
 
 
 #endif  // PARSETAB_H_

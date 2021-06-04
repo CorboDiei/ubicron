@@ -16,11 +16,5 @@ using namespace std;
 
 Jobs parseTab(string& path);
 
-class JSONTree {
-    public: 
-
-    private:
-};
-
 
 #endif  // PARSETAB_H_

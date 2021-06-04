@@ -6,6 +6,8 @@
 #include <cstdint>
 #include <vector>
 #include <queue>
+#include <string>
+#include <map>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -13,48 +15,41 @@
 using namespace std;
 using namespace boost::uuids;
 
-// The entire list of jobs that the program
+enum FormatType { input, output, sub_triggers };
+
+bool VerifyJSON(JSONTree tree, FormatType);
+
+class JSONTree {
+    public:
+        explicit JSONTree(string )
+
+    private:
+};
 
 class Job {
     public:
-        explicit Job(void) { }
+        Job(void) { }
         explicit Job(uuid id) : job_id_(id) { }
-        // explicit Job(uuid )
+        explicit Job(uuid id, vector<string> commands, )
 
 
         uuid get_id(void) {return job_id_;}
     private:
         uuid job_id_;
+        vector<string> commands;
 
 
 
-};
-
-class InputJSON {
-    public: 
-
-    private: 
-
-};
-
-class OutputJSON {
-    public: 
-
-    private: 
-};
-
-class SubsequentJSON {
-    public: 
-
-    private: 
 };
 
 enum Instancetype { upon, every };
 
 class Instance {
-    public: 
+    public:
+        Instance(void) { }
 
     private:
+        Instancetype type_;
 
 };
 
@@ -62,7 +57,8 @@ class Jobs {
     public: 
 
     private:
-        vector<Job> jobs_list_;
+        map<uuid, Job> jobs_list_;
+        map<string, uuid> aliases_;
         vector<Instance> listeners_;
         queue<Instance> job_instances_;
 };

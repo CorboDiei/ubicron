@@ -1,0 +1,8 @@
+{
+    "inputparam1": "37 output drive",
+    "superparam": {
+        "subparam1": "yes",
+        "subparam2": false
+    },
+    "inputparam2": [1, 2, 3]
+}

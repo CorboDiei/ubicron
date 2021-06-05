@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
     if (argc == 2) {
         str = string(argv[1]);
     }
-    Jobs* js = parseTab(str);
+    Jobs js;
+    bool b = parseTab(str, &js);
     return 0;
 }

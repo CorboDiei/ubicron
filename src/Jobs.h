@@ -8,16 +8,16 @@
 #include <queue>
 #include <string>
 #include <map>
-#include <boost/uuid/uuid.hpp>
+// #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
+#include "./thirdparty/boost/uuid/uuid.hpp"
+#include "./thirdparty/json.hpp"
 
 using namespace std;
 using namespace boost::uuids;
-namespace pt = boost::property_tree;
+using json = nlohmann::json;
 
 enum FormatType { unset, input, output, sub_triggers };
 
@@ -31,7 +31,7 @@ class FormatTree {
         string get_value(string query);
 
     private:
-        pt::ptree root;
+        json tree;
         FormatType type_;
 };
 
@@ -42,8 +42,8 @@ class Job {
         explicit Job(uuid id, vector<string> commands,
             FormatTree input, FormatTree output, FormatTree sub_trigs);
 
-        uuid get_id(void) {return job_id_;}
-        bool set_id(uuid id) {job_id_ = id;}
+        uuid get_id(void);
+        bool set_id(uuid id);
 
         FormatTree get_input(void) {return input_;}
 

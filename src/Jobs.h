@@ -31,30 +31,42 @@ class FormatTree {
         string get_value(string query);
 
     private:
-        json tree;
+        json tree_;
         FormatType type_;
 };
 
 class Job {
     public:
+        // ctors
         Job(void) : verified_(false) { }
         explicit Job(uuid id) : job_id_(id), verified_(false) { }
         explicit Job(uuid id, vector<string> commands,
             FormatTree input, FormatTree output, FormatTree sub_trigs);
+        // dtor
+        ~Job(void) { }
 
-        uuid get_id(void);
-        bool set_id(uuid id);
+        // getters and setters
+        uuid get_id(void) { return job_id_; }
+        void set_id(uuid id) { job_id_ = id; }
+        vector<string> get_commands(void) { return commands_; }
+        string get_next_command(void);
+        bool set_commands(vector<string> commands);
+        bool add_command(string command);
+        FormatTree get_input(void) { return input_; }
+        bool set_input(FormatTree input);
+        FormatTree get_output(void) { return output_; }
+        bool set_output(FormatTree output);
+        FormatTree get_sub_trigs(void) { return sub_triggers_; }
+        bool set_sub_trigs(FormatTree sub_trigs);
 
-        FormatTree get_input(void) {return input_;}
-
+        int get_command_size(void) { return commands_.size(); }
+        bool is_verified(void) { return verified_; }
     private:
         uuid job_id_;
         vector<string> commands_;
         FormatTree input_, output_, sub_triggers_;
+        unsigned int on_command_;
         bool verified_;
-
-
-
 };
 
 enum Instancetype { upon, every };
@@ -69,13 +81,20 @@ class Instance {
 };
 
 class Jobs {
-    public: 
+    public:
+        // ctors
+        Jobs(void) : verified_(false) { }
+        // dtor
+        ~Jobs(void) { }
+
+
 
     private:
         map<uuid, Job> jobs_list_;
         map<string, uuid> aliases_;
         vector<Instance> listeners_;
         queue<Instance> job_instances_;
+        bool verified_;
 };
 
 

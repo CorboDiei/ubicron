@@ -1,4 +1,5 @@
-62809510-7883-43b2-b557-ff1d21a55639:&:
+%%%% Job definition section
+$62809510-7883-43b2-b557-ff1d21a55639:&:
 {
     echo "Hello"
 }:&:
@@ -26,3 +27,9 @@
     },
     "inputparam2": [1, 2, 3]
 };&;
+&&&
+%%%% Alias section
+@somealias
+&&&
+%%%% Instance section
+#14 6 29...

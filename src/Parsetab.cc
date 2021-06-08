@@ -19,10 +19,12 @@ using namespace boost::uuids;
 using namespace boost::algorithm;
 using boost::lexical_cast;
 
-void illFormed(void) {
+void illFormed(const char* place) {
     cerr << "The table file is ill formed. Please read the documentation";
     cerr << " to fix the table file or reset it from the remotely";
     cerr << " saved properly formed table file." << endl;
+    cerr << endl;
+    cerr << "The error occured around " << place << "." << endl;
     exit(EXIT_FAILURE);
 }
 
@@ -52,7 +54,7 @@ bool parseTab(string& path, Jobs* j) {
     // split into sections
     vector<string> sections = split(full_file, "&&&");
     if (sections.size() != 3) {
-        illFormed();
+        illFormed("bad section splitting");
     }
     Jobs jobs;
     string end_symbol(";&;");
@@ -69,16 +71,28 @@ bool parseTab(string& path, Jobs* j) {
         Job job;
         vector<string> parts = split(job_s, ":&:");
         // parse id
-        uuid id = lexical_cast<uuid>(parts[0]);
+        uuid id;
+        try {
+            id = lexical_cast<uuid>(parts[0]);
+        } catch (...) {
+            illFormed("uuid parsing");
+        }
         job.set_id(id);
-        cerr << job.get_id() << endl;
+
         // parse commands
         string open_symbol("{");
         string close_symbol("}");
         size_t open_pos = parts[1].find(open_symbol);
         size_t close_pos = parts[1].find(close_symbol);
+        if (open_pos == string::npos || close_pos == string::npos) {
+            illFormed("command list");
+        }
         string commands = parts[1].substr(open_pos + 1,
             close_pos - open_pos - 1);
+        trim(commands);
+        if (commands.length() == 0) {
+            illFormed("command list");
+        }
         size_t nl_pos = 0;
         while ((nl_pos = commands.find('\n')) != string::npos) {
             string cmd_line = commands.substr(0, nl_pos);
@@ -88,9 +102,42 @@ bool parseTab(string& path, Jobs* j) {
             }
             commands.erase(0, nl_pos + 1);
         }
-        cerr << job.get_command_size() << endl;
+        trim(commands);
+        if (commands.length() != 0) {
+            job.add_command(commands);
+        }
 
+        // parse trees
+        FormatTree input;
+        try {
+            input.parse_tree(parts[2]);
+        } catch (...) {
+            illFormed("input format json parsing");
+        }
+        if (!job.set_input(input)) {
+            illFormed("input tree verification");
+        }
+        
+        FormatTree output;
+        try {
+            input.parse_tree(parts[3]);
+        } catch (...) {
+            illFormed("output format json parsing");
+        }
+        if (!job.set_output(output)) {
+            illFormed("output tree verification");
+        }
 
+        FormatTree output;
+        try {
+            input.parse_tree(parts[3]);
+        } catch (...) {
+            illFormed("output format json parsing");
+        }
+        if (!job.set_output(output)) {
+            illFormed("output tree verification");
+        }
+        job.verify_job();
 
         job_defs.erase(0, end_pos + end_symbol.length());
     }

@@ -21,9 +21,8 @@ using namespace boost::uuids;
 using namespace boost::algorithm;
 using json = nlohmann::json;
 
-FormatTree::FormatTree(string json_text) {
+bool FormatTree::parse_tree(string& json_text) {
     tree_ = json::parse(&json_text[0]);
-    type_ = FormatType::unset;
 }
 
 bool FormatTree::verify_tree(FormatType type) {
@@ -46,8 +45,12 @@ string FormatTree::get_value(string query) {
     
 }
 
+void FormatTree::print_tree(void) {
+    cout << tree_.dump(4) << endl;
+}
+
 Job::Job(uuid id, vector<string> commands, FormatTree input,
-    FormatTree output, FormatTree sub_trigs) {
+        FormatTree output, FormatTree sub_trigs) {
     job_id_ = id;
     commands_ = commands;
     on_command_ = 0;
@@ -106,4 +109,8 @@ bool Job::set_sub_trigs(FormatTree sub_trigs) {
     }
     sub_triggers_ = sub_trigs;
     return true;
+}
+
+bool Job::verify_job(void) {
+    
 }

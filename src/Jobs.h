@@ -24,11 +24,13 @@ enum FormatType { unset, input, output, sub_triggers };
 class FormatTree {
     public:
         FormatTree(void) : type_(FormatType::unset) { }
-        explicit FormatTree(string json_text);
+        bool parse_tree(string& json_text);
 
         bool verify_tree(FormatType type);
 
         string get_value(string query);
+
+        void print_tree(void);
 
     private:
         json tree_;
@@ -60,6 +62,7 @@ class Job {
         bool set_sub_trigs(FormatTree sub_trigs);
 
         int get_command_size(void) { return commands_.size(); }
+        bool verify_job(void);
         bool is_verified(void) { return verified_; }
     private:
         uuid job_id_;

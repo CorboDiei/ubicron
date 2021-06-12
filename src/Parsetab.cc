@@ -65,7 +65,7 @@ bool parseTab(string& path, Jobs* j) {
     size_t j_pos = 0;
     while ((j_pos = job_defs.find(start_symbol)) != string::npos) {
         size_t end_pos = job_defs.find(end_symbol, j_pos);
-        string job_s = job_defs.substr(j_pos + 1, end_pos - j_pos);
+        string job_s = job_defs.substr(j_pos + 1, end_pos - j_pos - 1);
 
         // parse job
         Job job;
@@ -109,6 +109,7 @@ bool parseTab(string& path, Jobs* j) {
 
         // parse trees
         FormatTree input;
+        
         try {
             input.parse_tree(parts[2]);
         } catch (...) {
@@ -128,14 +129,15 @@ bool parseTab(string& path, Jobs* j) {
             illFormed("output tree verification");
         }
 
-        FormatTree output;
+        FormatTree sub_trigs;
+        cerr << parts[4] << endl;
         try {
-            input.parse_tree(parts[3]);
+            input.parse_tree(parts[4]);
         } catch (...) {
-            illFormed("output format json parsing");
+            illFormed("subsequent triggers format json parsing");
         }
-        if (!job.set_output(output)) {
-            illFormed("output tree verification");
+        if (!job.set_sub_trigs(sub_trigs)) {
+            illFormed("subsequent triggers tree verification");
         }
         job.verify_job();
 

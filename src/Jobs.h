@@ -54,7 +54,7 @@ class Job {
         string get_next_command(void);
         bool set_commands(vector<string> commands);
         bool add_command(string command);
-        FormatTree get_input(void) { return input_; }
+        FormatTree get_input(void) { return input_;/ }
         bool set_input(FormatTree input);
         FormatTree get_output(void) { return output_; }
         bool set_output(FormatTree output);
@@ -67,6 +67,7 @@ class Job {
     private:
         uuid job_id_;
         vector<string> commands_;
+        vector<string> command_reps_;
         FormatTree input_, output_, sub_triggers_;
         unsigned int on_command_;
         bool verified_;

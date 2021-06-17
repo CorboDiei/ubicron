@@ -1,4 +1,4 @@
-// Hopefully the beginning of something great
+// Currently just tests table parsing
 
 #include <iostream>
 #include <string>

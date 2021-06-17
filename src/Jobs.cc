@@ -25,22 +25,6 @@ bool FormatTree::parse_tree(string& json_text) {
     tree_ = json::parse(&json_text[0]);
 }
 
-bool FormatTree::verify_tree(FormatType type) {
-    // for now
-    return true;
-
-    if (type == type_) {
-        return true;
-    } else if (type == FormatType::input) {
-
-    } else if (type == FormatType::output) {
-
-    } else if (type == FormatType::sub_triggers) {
-
-    }
-    return false;
-}
-
 string FormatTree::get_value(string query) {
     
 }
@@ -87,30 +71,37 @@ bool Job::add_command(string command) {
     return true;
 }
 
-bool Job::set_input(FormatTree input) {
-    if (!input.verify_tree(FormatType::input)) {
-        return false;
-    }
+void Job::set_input(FormatTree input) {
     input_ = input;
-    return true;
 }
 
-bool Job::set_output(FormatTree output) {
-    if (!output.verify_tree(FormatType::output)) {
-        return false;
-    }
+void Job::set_output(FormatTree output) {
     output_ = output;
-    return true;
 }
 
-bool Job::set_sub_trigs(FormatTree sub_trigs) {
-    if (!sub_trigs.verify_tree(FormatType::sub_triggers)) {
-        return false;
-    }
+void Job::set_sub_trigs(FormatTree sub_trigs) {
     sub_triggers_ = sub_trigs;
-    return true;
 }
 
-bool Job::verify_job(void) {
+bool Job::verify_job_phase_1(void) {
+    // check that variable params used in commands is subset of 
+    // input params
+
+    // get list of variable params
+    vector<string> var_params;
+
     
+
+
+    // check that output value line values are within the number of 
+    // commands
+
+    int command_num = get_command_size();
+
+}
+
+bool Job::verify_job_phase_2(map<string, FormatTree> full_list) {
+    // check that job command in subsetquent triggers is valid:
+    // 1. valid commands, valid
+
 }

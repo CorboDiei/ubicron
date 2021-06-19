@@ -1,10 +1,10 @@
 CC = g++
 CFLAGS = -Wall -g -std=c++17
 
-main: main.o Jobs.o Parsetab.o Utils.o Remote.o
+main: main.o Jobs.o Parsetab.o Utils.o Remote.o Local.o
 	${CC} ${CFLAGS} -o $@ $^
 
-main.o: main.cc Parsetab.h Jobs.h Remote.h
+main.o: main.cc Parsetab.h Jobs.h Remote.h Local.h
 	${CC} ${CFLAGS} -c $<
 
 Parsetab.o: Parsetab.cc Parsetab.h Jobs.h Utils.h
@@ -17,6 +17,9 @@ Utils.o: Utils.cc Utils.h
 	${CC} ${CFLAGS} -c $<
 
 Remote.o: Remote.cc Remote.h
+	${CC} ${CFLAGS} -c $<
+
+Local.o: Local.cc Local.h
 	${CC} ${CFLAGS} -c $<
 
 clean:

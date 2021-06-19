@@ -115,9 +115,9 @@ bool parseTab(string& path, Jobs* j) {
         } catch (...) {
             illFormed("input format json parsing");
         }
-        if (!job.set_input(input)) {
-            illFormed("input tree verification");
-        }
+        // if (!job.set_input(input)) {
+        //     illFormed("input tree verification");
+        // }
         
         FormatTree output;
         try {
@@ -125,9 +125,9 @@ bool parseTab(string& path, Jobs* j) {
         } catch (...) {
             illFormed("output format json parsing");
         }
-        if (!job.set_output(output)) {
-            illFormed("output tree verification");
-        }
+        // if (!job.set_output(output)) {
+        //     illFormed("output tree verification");
+        // }
 
         FormatTree sub_trigs;
         cerr << parts[4] << endl;
@@ -136,10 +136,10 @@ bool parseTab(string& path, Jobs* j) {
         } catch (...) {
             illFormed("subsequent triggers format json parsing");
         }
-        if (!job.set_sub_trigs(sub_trigs)) {
-            illFormed("subsequent triggers tree verification");
-        }
-        job.verify_job();
+        // if (!job.set_sub_trigs(sub_trigs)) {
+        //     illFormed("subsequent triggers tree verification");
+        // }
+        // job.verify_job();
 
         job_defs.erase(0, end_pos + end_symbol.length());
     }

@@ -78,6 +78,7 @@ bool startup(void) {
     bool b = parseTab(path, &js);
 
     // perform job verification stage 1
+    
 
 
     // perform job verification stage 2

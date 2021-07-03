@@ -69,21 +69,28 @@ int main(int argc, char** argv) {
 // 3. Establish remote connection
 // 4. Perform job verification stage 2
 // 5. Listen locally
-// 6, Listen remotely
+// 6. Listen remotely
+// 7. Begin job daemon
 
 bool startup(void) {
     // read and parse table file
     string path("../testfiles/.ubicrontab");
     Jobs js;
-    bool b = parseTab(path, &js);
 
     // perform job verification stage 1
-    
+    bool b = parseTab(path, &js);
 
+    // establish remote connection
 
     // perform job verification stage 2
 
-    // establish remote connection
+    // listen locally
+
+    // listen remotely
+
+    // begin job daemon
+
+    
     return b;
 }
 

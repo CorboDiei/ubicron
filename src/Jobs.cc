@@ -6,28 +6,51 @@
 #include <queue>
 #include <string>
 #include <map>
+#include <typeinfo>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "./Jobs.h"
+#include "./Utils.h"
 
 #include "./thirdparty/json.hpp"
 
 using namespace std;
 using namespace boost::uuids;
 using namespace boost::algorithm;
+using boost::lexical_cast;
 using json = nlohmann::json;
 
 bool FormatTree::parse_tree(string& json_text) {
     tree_ = json::parse(&json_text[0]);
+    // cerr << tree_.dump(4) << endl;
     return true;
 }
 
 string FormatTree::get_value(string query) {
-    
+    string failure("&failure&");
+    string res;
+    vector<string> tokens = split(query, ".");
+    auto cur = tree_;
+    for (unsigned int i = 0; i < tokens.size(); i++) {
+        try {
+            cur = cur.at(tokens[i]);
+        } catch (nlohmann::detail::type_error& e) {
+            try {
+                cur = cur[lexical_cast<int>(tokens[i])];
+            } catch (...) {
+                return failure;
+            }
+        } catch (nlohmann::detail::out_of_range& e) {
+            return failure;
+        }
+    }
+    res = lexical_cast<string>(cur);
+    return res;
 }
 
 void FormatTree::print_tree(void) {
@@ -92,14 +115,29 @@ bool Job::verify_job_phase_1(void) {
 
     // get list of variable params
     vector<string> var_params;
-
+    for (string command : commands_) {
+        for (string token : split(command, " ")) {
+            if (token[0] == '@') {
+                token = token.erase(0, 1);
+                var_params.push_back(token);
+            }
+        }
+    }
+    string failure("&failure&");
+    for (auto it : var_params) {
+        if ((failure.compare(input_.get_value(it))) == 0) {
+            cerr << "Did not find " << it << endl;
+            return false;
+        }
+        cerr << "Found " << it << endl;
+    }
     
 
 
     // check that output value line values are within the number of 
     // commands
 
-    int command_num = get_command_size();
+    // int command_num = get_command_size();
     return true;
 }
 

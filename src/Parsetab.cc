@@ -115,31 +115,45 @@ bool parseTab(string& path, Jobs* j) {
         } catch (...) {
             illFormed("input format json parsing");
         }
-        // if (!job.set_input(input)) {
-        //     illFormed("input tree verification");
-        // }
+
+        job.set_input(input);
         
         FormatTree output;
+        // cerr << parts[3] << endl;
         try {
-            input.parse_tree(parts[3]);
+            output.parse_tree(parts[3]);
         } catch (...) {
             illFormed("output format json parsing");
         }
-        // if (!job.set_output(output)) {
-        //     illFormed("output tree verification");
-        // }
+        
+        job.set_output(output);
 
         FormatTree sub_trigs;
-        cerr << parts[4] << endl;
-        try {
-            input.parse_tree(parts[4]);
+            try {
+            sub_trigs.parse_tree(parts[4]);
         } catch (...) {
             illFormed("subsequent triggers format json parsing");
         }
-        // if (!job.set_sub_trigs(sub_trigs)) {
-        //     illFormed("subsequent triggers tree verification");
+        
+        job.set_sub_trigs(sub_trigs);
+
+        // checking job
+        // cout << "uuid: " << job.get_id() << endl;
+        // cout << "commands: " << endl;
+        // for (auto it : job.get_commands()) {
+        //     cout << it << endl;
         // }
-        // job.verify_job();
+        // cout << "input: " << endl;
+        // job.get_input().print_tree();
+        // cout << "output: " << endl;
+        // job.get_output().print_tree();
+        // cout << "subs: " << endl;
+        // job.get_sub_trigs().print_tree();
+
+        // stage 1 verification
+        bool ver1 = job.verify_job_phase_1();
+        
+
 
         job_defs.erase(0, end_pos + end_symbol.length());
     }

@@ -2,9 +2,10 @@
 
 #include <string>
 #include <vector>
-#include <boost/algorithm/string.hpp>
 
 #include "./Utils.h"
+
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 using namespace boost::algorithm;

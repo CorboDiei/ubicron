@@ -1,8 +1,8 @@
 %%%% Job definition section
 $62809510-7883-43b2-b557-ff1d21a55639:&:
 {
-    echo "Hello"
-    echo "Line 2"
+    echo "Hello" @inputparam1 @superparam.subparam2
+    echo "Line 2" @testfail
 }:&:
 {
     "inputparam1": "37 output drive",
@@ -13,20 +13,19 @@ $62809510-7883-43b2-b557-ff1d21a55639:&:
     "inputparam2": [1, 2, 3]
 }:&:
 {
-    "inputparam1": "37 output drive",
-    "superparam": {
-        "subparam1": "yes",
-        "subparam2": false
-    },
-    "inputparam2": [1, 2, 3]
+    "outputparam1": "1.2"
+    "superout": {
+        "subout1": 2.1,
+        "subout2": 2.2
+    }
 }:&:
 {
-    "inputparam1": "37 output drive",
-    "superparam": {
-        "subparam1": "yes",
-        "subparam2": false
-    },
-    "inputparam2": [1, 2, 3]
+    "local.testjob": {
+        "firstparam": "outputparam1"
+    }
+    "remote.machine1.testjob2": {
+        "firstparam": "superout.subout1"
+    }
 };&;
 &&&
 %%%% Alias section

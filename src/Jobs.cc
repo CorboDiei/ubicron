@@ -7,17 +7,18 @@
 #include <string>
 #include <map>
 #include <typeinfo>
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include "./Jobs.h"
 #include "./Utils.h"
 
 #include "./thirdparty/json.hpp"
+#include <boost/uuid/uuid.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/lexical_cast.hpp>
+
 
 using namespace std;
 using namespace boost::uuids;
@@ -126,16 +127,14 @@ bool Job::verify_job_phase_1(void) {
     string failure("&failure&");
     for (auto it : var_params) {
         if ((failure.compare(input_.get_value(it))) == 0) {
-            cerr << "Did not find " << it << endl;
             return false;
         }
-        cerr << "Found " << it << endl;
     }
-    
-
 
     // check that output value line values are within the number of 
     // commands
+
+    
 
     // int command_num = get_command_size();
     return true;

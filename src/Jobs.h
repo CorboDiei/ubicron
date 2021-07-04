@@ -64,7 +64,6 @@ class Job {
 
         int get_command_size(void) { return commands_.size(); }
         bool verify_job_phase_1(void);
-        bool verify_job_phase_2(map<string, FormatTree> full_list);
         bool is_verified(void) { return verified_; }
     private:
         uuid job_id_;

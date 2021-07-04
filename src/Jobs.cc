@@ -170,9 +170,3 @@ bool Job::verify_job_phase_1(void) {
     
     return true;
 }
-
-bool Job::verify_job_phase_2(map<string, FormatTree> full_list) {
-    // check that job command in subsetquent triggers is valid:
-    // 1. valid commands, valid
-    return true;
-}

@@ -23,8 +23,6 @@ bool new_dialogue(void);
 
 bool connect_dialogue(void);
 
-bool establish_connection(Remote remote);
-
 bool listen_locally(void);
 
 //  Options: 
@@ -82,8 +80,18 @@ bool startup(void) {
     bool b = parseTab(path, &js);
 
     // establish remote connection
+    Remote remote;
+    if (!remote.full_connection()) {
+        cerr << "idk" << endl;
+    }
+    cout << "Connection Established" << endl;
 
     // perform job verification stage 2
+    map<string, FormatTree> remote_list;
+    if (!remote.load_remote_jobs(remote_list&)) {
+        cerr << "idk" << endl;
+    }
+    if (!jo)
 
     // listen locally
 

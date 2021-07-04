@@ -26,9 +26,14 @@ using namespace boost::algorithm;
 using boost::lexical_cast;
 using json = nlohmann::json;
 
+void recursive_iterate(const json& j, vector<string>& vec);
+
 bool FormatTree::parse_tree(string& json_text) {
-    tree_ = json::parse(&json_text[0]);
-    // cerr << tree_.dump(4) << endl;
+    try {
+        tree_ = json::parse(&json_text[0]);
+    } catch (...) {
+        return false;
+    }
     return true;
 }
 
@@ -52,6 +57,26 @@ string FormatTree::get_value(string query) {
     }
     res = lexical_cast<string>(cur);
     return res;
+}
+
+void recursive_iterate(const json& j, vector<string>& vec) {
+    for (auto it = j.begin(); it != j.end(); it++) {
+        if (it->is_structured()) {
+            recursive_iterate(*it, vec);
+        } else {
+            try {
+                vec.push_back(lexical_cast<string>(*it));
+            } catch (...) {
+                continue;
+            }
+        }
+    }
+}
+
+vector<string> FormatTree::get_values() {
+    vector<string> vec;
+    recursive_iterate(tree_, vec);
+    return vec;
 }
 
 void FormatTree::print_tree(void) {
@@ -131,12 +156,18 @@ bool Job::verify_job_phase_1(void) {
         }
     }
 
-    // check that output value line values are within the number of 
-    // commands
+    // check that output value line values are less than or
+    // equal to the number of commands
+
+    for (auto it : output_.get_values()) {
+        string str = split(it, ".")[0];
+        str = str.erase(0, 1);
+        unsigned int val = lexical_cast<unsigned int>(str);
+        if (val > commands_.size()) {
+            return false;
+        }
+    }
     
-
-
-    // int command_num = get_command_size();
     return true;
 }
 

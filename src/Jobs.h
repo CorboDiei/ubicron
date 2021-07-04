@@ -27,6 +27,8 @@ class FormatTree {
 
         string get_value(string query);
 
+        vector<string> get_values(void);
+
         void print_tree(void);
 
         vector<string> get_value_list(void);

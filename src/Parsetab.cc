@@ -111,28 +111,23 @@ bool parseTab(string& path, Jobs* j) {
         // parse trees
         FormatTree input;
         
-        try {
-            input.parse_tree(parts[2]);
-        } catch (...) {
+        if (!input.parse_tree(parts[2])) {
             illFormed("input format json parsing");
         }
 
         job.set_input(input);
         
         FormatTree output;
-        // cerr << parts[3] << endl;
-        try {
-            output.parse_tree(parts[3]);
-        } catch (...) {
+
+        if (!output.parse_tree(parts[3])) {
             illFormed("output format json parsing");
         }
         
         job.set_output(output);
 
         FormatTree sub_trigs;
-            try {
-            sub_trigs.parse_tree(parts[4]);
-        } catch (...) {
+
+        if (!sub_trigs.parse_tree(parts[4])) {
             illFormed("subsequent triggers format json parsing");
         }
         

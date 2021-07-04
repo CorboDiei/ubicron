@@ -153,7 +153,9 @@ bool parseTab(string& path, Jobs* j) {
 
         // stage 1 verification
         bool ver1 = job.verify_job_phase_1();
-        
+        if (!ver1) {
+            return false;
+        }
 
 
         job_defs.erase(0, end_pos + end_symbol.length());

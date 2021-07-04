@@ -133,8 +133,8 @@ bool Job::verify_job_phase_1(void) {
 
     // check that output value line values are within the number of 
     // commands
-
     
+
 
     // int command_num = get_command_size();
     return true;

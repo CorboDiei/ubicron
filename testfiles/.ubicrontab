@@ -15,8 +15,8 @@ $62809510-7883-43b2-b557-ff1d21a55639:&:
 {
     "outputparam1": "1.2"
     "superout": {
-        "subout1": 2.1,
-        "subout2": 2.2
+        "subout1": "2.1",
+        "subout2": "2.2-5"
     }
 }:&:
 {

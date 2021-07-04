@@ -154,7 +154,7 @@ bool parseTab(string& path, Jobs* j) {
         // stage 1 verification
         bool ver1 = job.verify_job_phase_1();
         if (!ver1) {
-            return false;
+            illFormed("command and input parameter matching");
         }
 
 
